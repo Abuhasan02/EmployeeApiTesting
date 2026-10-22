@@ -1,0 +1,353 @@
+{
+  "info": {
+    "_postman_id": "23f74aec-04c2-413b-b3db-c39fe1676414",
+    "name": "SqalogyB3TestCollection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10019293",
+    "_collection_link": "https://go.postman.co/collection/10019293-23f74aec-04c2-413b-b3db-c39fe1676414?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Employee_Login_With_Valid_Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\nlet employeeToken = jsonData.token;\r\n\r\nif (pm.response.code === 200) {\r\n    pm.environment.set(\"Token\", employeeToken);\r\n}\r\n\r\npm.test(\"Status code is 200\", () => {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Token is present in the response\", () => {\r\n    pm.expect(employeeToken).to.exist;\r\n});\r\n\r\npm.test(\"Employee Login Successfully\", () => {\r\n    pm.expect(jsonData.message).to.eql(\"Login successful\")\r\n})\r\n\r\npm.test(\"Username is not null\", () => {\r\n    pm.expect(jsonData.user.username).to.not.eql(null)\r\n    })\r\n\r\npm.test(\"Token is not null\", () => {\r\n    pm.expect(employeeToken).to.exist\r\n    })\r\n\r\npm.test(\"Token is a string\", () => {\r\n    pm.expect(employeeToken).to.be.a('string')\r\n    })\r\n\r\npm.test(\"Token is not empty\", () => {\r\n    pm.expect(employeeToken).to.not.be.empty\r\n    })"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "   {\r\n     \"username\": \"admin\",\r\n     \"password\": \"admin123\"\r\n   }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/auth/login",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Employee_Login_With_Invalid_Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\nlet employeeToken = jsonData.token;\r\n\r\npm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Error message is 'Invalid credentials'\", function () {\r\n    pm.expect(jsonData.error).to.eql(\"Invalid credentials\");\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "   {\r\n     \"username\": \"admin\",\r\n     \"password\": \"admin3\"\r\n   }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/auth/login",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_All_Employee_Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\nlet totalEmployee = jsonData.totalEmployeeCount;\r\n\r\npm.test(\"Status code is 200\", ()=> {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Employee Data Successfuly fetched\", () => {\r\n    pm.expect(jsonData.message).to.eql(\"Employees fetched successfully\")\r\n})\r\n\r\npm.test(\"Total employees fetched is correct\", () => {\r\n    pm.expect(jsonData.totalEmployees).to.equal(totalEmployee);\r\n});\r\npm.test(\"Employee First Name is String\", () => {\r\n    pm.expect(jsonData.data[0].firstName).to.be.a('string');\r\n});\r\n\r\nlet expectedNames = [\"John\", \"Jane\", \"Johnson\"];\r\nlet actualNames = jsonData.data.map(emp => emp.firstName);\r\n\r\npm.test(\"All expected employees exist\", () => {\r\n    pm.expect(actualNames).to.eql(expectedNames);\r\n});\r\n\r\nlet phone = jsonData.data[0].phone;\r\n\r\npm.test(\"Phone has 11 digits\", () => {\r\n    pm.expect(phone).to.have.lengthOf(11);\r\n});\r\npm.test(\"Phone number is string\",()=>\r\n{\r\n    pm.expect(phone).to.be.a('string');\r\n})\r\npm.test(\"Phone is a number\", () => {\r\n    pm.expect(phone).to.be.a('number');\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/employees?limit=10",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create_New_Employee",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\n\r\nlet employeeId = jsonData.data.id;\r\nlet employeeFistName = jsonData.data.firstName;\r\nlet employeeLastName = jsonData.data.lastName;\r\nlet employeeEmail = jsonData.data.email;\r\n// let employeePhone = jsonData.data.phone;\r\n// let employeeDepartment = jsonData.data.department;\r\n// let employeePosition = jsonData.data.position;\r\n// let employeeSalary = jsonData.data.salary;\r\n\r\n\r\npm.environment.set(\"EmployeeId\", employeeId);\r\npm.environment.set(\"EmployeeFistName\", employeeFistName);\r\npm.environment.set(\"EmployeeLastName\", employeeLastName);\r\npm.environment.set(\"EmployeeEmail\", employeeEmail);\r\n// pm.environment.set(\"EmployeePhone\", employeePhone);\r\n// pm.environment.set(\"EmployeeDepartment\", employeeDepartment);\r\n// pm.environment.set(\"EmployeePosition\", employeePosition);\r\n// pm.environment.set(\"EmployeeSalary\", employeeSalary);\r\n\r\npm.test(\"Status code is 201\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Status is 400 for invalid data\", () => {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Employee created successfully\", () => {\r\n    pm.expect(jsonData.message).to.equal(\"Employee created successfully\")\r\n});\r\n\r\npm.test(\"Employee first name is string\", () => {\r\n    pm.expect(jsonData.data.firstName).to.be.a('string');\r\n});\r\npm.test(\"Employee email address is correct format\", () => {\r\n    pm.expect(jsonData.data.email).to.match(/^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$/);\r\n});\r\npm.test(\"Employee phone number is string\", () => {\r\n    pm.expect(jsonData.data.phone).to.be.a('string');\r\n});\r\npm.test(\"Employee phone number is 11 digits\", () => {\r\n    pm.expect(jsonData.data.phone).to.have.lengthOf(11);\r\n});\r\npm.test(\"Employee phone number is bangladeshi phone number\", () => {\r\n    pm.expect(jsonData.data.phone).to.match(/^01[3-9]\\d{8}$/);\r\n});\r\npm.test(\"Employee department within this data\", () => {\r\n    pm.expect(jsonData.data.department).to.be.oneOf([\"Chemisty\"]);\r\n});\r\npm.test(\"Employee salary is between 30k to 100k\", () => {\r\n    pm.expect(jsonData.data.salary).to.be.within(30000, 100000);\r\n});\r\n\r\npm.test(\"Employee ID is not null\", ()=> {\r\n    pm.expect(employeeId).to.not.be.null;\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let prefixes = [\"013\", \"014\", \"015\", \"016\", \"017\", \"018\", \"019\"];\r\nlet prefix = prefixes[Math.floor(Math.random() * prefixes.length)];\r\nlet remainingDigits = Math.floor(10000000 + Math.random() * 90000000);\r\nlet employeephone = prefix + remainingDigits;\r\n\r\nconsole.log(employeephone);\r\n\r\npm.environment.set(\"EmployeePhone\", employeephone);\r\n\r\nlet employeeDepartment = [\"HR\",\"English\",\"Math\",\"Biology\",\"Architecture\"];\r\nlet randomDepartment=Math.floor(Math.random()*employeeDepartment.length);\r\nlet chooseDepartment=employeeDepartment[randomDepartment];\r\n\r\nconsole.log(chooseDepartment);\r\n\r\npm.environment.set(\"EmployeeDepartment\", chooseDepartment);\r\n\r\n\r\nlet minSalary = 30000;   \r\nlet maxSalary = 100000;  \r\n\r\nlet employeeSalary = Math.floor(Math.random() * (maxSalary - minSalary + 1)) + minSalary;\r\n\r\nconsole.log(employeeSalary);\r\npm.environment.set(\"EmployeeSalary\", employeeSalary);\r\n\r\nlet employeePosition = [\"Manager\", \"Developer\", \"Tester\", \"Designer\", \"Accountant\"];\r\nlet randomPosition = Math.floor(Math.random() * employeePosition.length);\r\nlet choosePosition = employeePosition[randomPosition];\r\npm.environment.set(\"EmployeePosition\", choosePosition);\r\nconsole.log(choosePosition);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomFirstName}}@company.com\",\r\n    \"phone\": \"{{EmployeePhone}}\",\r\n    \"department\": \"{{EmployeeDepartment}}\",\r\n    \"position\": \"{{EmployeePosition}}\",\r\n    \"salary\": {{EmployeeSalary}},\r\n    \"hireDate\": \"2022-01-15\",\r\n    \"status\": \"active\",\r\n    \"createdAt\": \"2022-01-15T09:00:00Z\",\r\n    \"updatedAt\": \"2022-01-15T09:00:00Z\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/employees",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update_Employee_Data",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let positions = [\"Manager\", \"Developer\", \"Tester\", \"Designer\", \"Accountant\"];\r\nlet newPosition = positions[Math.floor(Math.random() * positions.length)];\r\npm.environment.set(\"UpdatePosition\", newPosition);\r\n\r\nlet prefixes = [\"013\", \"014\", \"015\", \"016\", \"017\", \"018\", \"019\"];\r\nlet prefix = prefixes[Math.floor(Math.random() * prefixes.length)];\r\nlet digits = Math.floor(10000000 + Math.random() * 90000000);\r\npm.environment.set(\"UpdatePhone\", prefix + digits);\r\n"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", () => {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Success is true\", () => {\r\n    pm.expect(jsonData.success).to.be.true;\r\n});\r\npm.test(\"Message is correct\", () => {\r\n    pm.expect(jsonData.message).to.eql(\"Employee updated successfully\");\r\n});\r\npm.test(\"Phone is updated\", () => {\r\n    pm.expect(jsonData.data.phone).to.eql(pm.environment.get(\"UpdatePhone\"));\r\n});\r\npm.test(\"Position is updated\", () => {\r\n    pm.expect(jsonData.data.position).to.eql(pm.environment.get(\"UpdatePosition\"));\r\n});\r\n\r\n\r\n\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"phone\": \"{{UpdatePhone}}\",\r\n    \"position\": \"{{UpdatePosition}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/employees/{{EmployeeId}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{EmployeeId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search_Employee",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\n\r\npm.test(\"Check if the response status code is 200\", ()=> {\r\n    pm.response.to.have.status(200);\r\n    });\r\npm.test(\"Check if the response message is 'Employee fetched successfully'\", () => {\r\n    pm.expect(jsonData.message).to.eql(\"Employee fetched successfully\");\r\n});\r\npm.test(\"Check if the employee data is present\", () => {\r\n    pm.expect(jsonData.data).to.have.property(\"id\");\r\n    pm.expect(jsonData.data).to.have.property(\"firstName\");\r\n});\r\npm.test(\"Fetched ID matches created ID\", () => {\r\n    pm.expect(jsonData.data.id).to.eql(Number(pm.environment.get(\"EmployeeId\")));\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/api/employees/{{EmployeeId}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{EmployeeId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete_Employee",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", ()=> {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Employee data is  deleted successfully\", () => {\r\n    pm.expect(jsonData.message).to.eql(\"Employee deleted Successfully\");\r\n});\r\npm.test(\"Deleted employee is not found\", () => {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/api/employees/{{EmployeeId}}?permanent=true",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{EmployeeId}}"
+          ],
+          "query": [
+            {
+              "key": "permanent",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
