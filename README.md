@@ -94,7 +94,7 @@ npm i newman-reporter-htmlextra
 | BUG-005 | EAT-5 | PATCH /api/employees/{id} | Accepts salary of 0 | Medium |
 
 Full bug report: [API_Bug_Report.xlsx](BugReport/API_Bug_Report.xlsx)
-![Newman Automation Demo](https://drive.google.com/drive/folders/1Mvz3RVOeDNUhvTd1_m4bU3ngo5FKTpKp?usp=drive_link)
+[Newman Automation Demo](https://drive.google.com/drive/folders/1Mvz3RVOeDNUhvTd1_m4bU3ngo5FKTpKp?usp=drive_link)
 
 ## Author
 Abu Hasan Siddique
