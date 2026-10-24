@@ -93,7 +93,7 @@ npm i newman-reporter-htmlextra
 | BUG-004 | EAT-4 | POST /api/employees | Accepts a number for lastName | Medium |
 | BUG-005 | EAT-5 | PATCH /api/employees/{id} | Accepts salary of 0 | Medium |
 
-Details and screenshots: [Bug Report spreadsheet](https://docs.google.com/spreadsheets/d/11LaHE2y7HKb5w2ijTLAtN6k052FXrGF3pSjNv1YqVuU/edit?gid=0#gid=0)
+Full bug report: [API_Bug_Report.xlsx](BugReport/API_Bug_Report.xlsx)
 
 ## Author
 Abu Hasan Siddique
