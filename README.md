@@ -78,25 +78,20 @@ npx newman run [collection] -e [environment]
 ```bash
 npm i newman-reporter-htmlextra
 ```
-```bash
-node./report.js
-```
-Note: The API is hosted on Render's free plan, so the first request may take up to a minute while the server wakes up.
-
 ## Newman Report
-![Newman Summary](<img width="565" height="592" alt="image" src="https://github.com/user-attachments/assets/b46e40e1-1d4b-4d66-9dd3-52475ee0b197" />
+(<img width="565" height="592" alt="image" src="https://github.com/user-attachments/assets/b46e40e1-1d4b-4d66-9dd3-52475ee0b197" />
 )
-![Newman Details](<img width="851" height="570" alt="image" src="https://github.com/user-attachments/assets/28a3350e-04f0-407b-8f3f-3d7587853d11" />
+(<img width="851" height="570" alt="image" src="https://github.com/user-attachments/assets/28a3350e-04f0-407b-8f3f-3d7587853d11" />
 )
 
 ## Bug Reports
-| Bug ID | Endpoint | Summary | Severity |
-|---|---|---|---|
+| Bug ID | Jira ID | Endpoint | Summary | Severity |
+|---|---|---|---|---|
 | BUG-001 | EAT-1 | POST /api/employees | Accepts invalid email format | Medium |
-| BUG-002 | EAT-2 | POST /api/employees | Accepts a number for position | Medium |
-| BUG-003 | EAT-3 | POST /api/employees | Accepts a number for lastName | Medium |
-| BUG-004 | EAT-4 | PATCH /api/employees/{id} | Accepts salary of 0 | Medium |
-| BUG-005 | EAT-5 | UPDATE /api/employees/{id} | Accepts salary of 0 | Medium |
+| BUG-002 | EAT-2 | POST /api/employees | Accepts a negative salary | Medium |
+| BUG-003 | EAT-3 | POST /api/employees | Accepts a number for position | Medium |
+| BUG-004 | EAT-4 | POST /api/employees | Accepts a number for lastName | Medium |
+| BUG-005 | EAT-5 | PATCH /api/employees/{id} | Accepts salary of 0 | Medium |
 
 Details and screenshots: [BUG_REPORT.md](https://docs.google.com/spreadsheets/d/11LaHE2y7HKb5w2ijTLAtN6k052FXrGF3pSjNv1YqVuU/edit?gid=0#gid=0)
 
