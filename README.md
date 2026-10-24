@@ -98,7 +98,7 @@ Note: The API is hosted on Render's free plan, so the first request may take up 
 | BUG-004 | EAT-4 | PATCH /api/employees/{id} | Accepts salary of 0 | Medium |
 | BUG-005 | EAT-5 | UPDAATE /api/employees/{id} | Accepts salary of 0 | Medium |
 
-Details and screenshots: [BUG_REPORT.md]([BUG_REPORT.md](https://docs.google.com/spreadsheets/d/11LaHE2y7HKb5w2ijTLAtN6k052FXrGF3pSjNv1YqVuU/edit?gid=0#gid=0))
+Details and screenshots: [BUG_REPORT.md](https://docs.google.com/spreadsheets/d/11LaHE2y7HKb5w2ijTLAtN6k052FXrGF3pSjNv1YqVuU/edit?gid=0#gid=0)
 
 ## Author
 Abu Hasan Siddique
