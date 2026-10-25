@@ -51,7 +51,8 @@ Published Postman documentation: [Employee API Documentation](https://documenter
 ## How to Run
 **Clone Project**
 ``` bash
-https://github.com/khundakerfaisal/SQALOGYB3ApiAutomationWithNewmanReporting.git
+git clone https://github.com/Abuhasan02/EmployeeApiTesting.git
+cd EmployeeApiTesting
 ```
 **Hit The command**
 
