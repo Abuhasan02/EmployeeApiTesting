@@ -54,6 +54,7 @@ Published Postman documentation: [Employee API Documentation](https://documenter
 https://github.com/khundakerfaisal/SQALOGYB3ApiAutomationWithNewmanReporting.git
 ```
 **Hit The command**
+
 ``` bash
 npm init -y
 ```
@@ -61,7 +62,6 @@ npm init -y
 npm i newman
 ```
 ``` bash
-```
 npx newman run SqalogyB3TestCollection.postman_collection.json -e SQALOGYB3TestEnv.postman_environment.json -r htmlextra
 ```
 ``` bash
