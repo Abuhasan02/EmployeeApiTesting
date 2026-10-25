@@ -49,35 +49,28 @@ EmployeeApiTesting/
 ## API Documentation
 Published Postman documentation: [Employee API Documentation](https://documenter.getpostman.com/view/10019293/2sBYHUTfLK)
 ## How to Run
-1. Clone the repository
-   ```
-   git clone https://github.com/Abuhasan02/EmployeeApiTesting.git
-   cd EmployeeApiTesting
-   ```
-2. Install dependencies
-   ```
-   npm install
-   ```
-3. Run the collection
-   ```
-   npx newman run SqalogyB3TestCollection.postman_collection.json -e SQALOGYB3TestEnv.postman_environment.json -r htmlextra
-   ```
-## Git Workflow
-
-Commands used to publish this project:
-
-```bash
+**Clone Project**
+``` bash
+https://github.com/khundakerfaisal/SQALOGYB3ApiAutomationWithNewmanReporting.git
+```
+**Hit The command**
+``` bash
 npm init -y
 ```
-```bash
+``` bash
 npm i newman
 ```
-```bash
-npx newman run [collection] -e [environment]
+``` bash
 ```
-```bash
+npx newman run SqalogyB3TestCollection.postman_collection.json -e SQALOGYB3TestEnv.postman_environment.json -r htmlextra
+```
+``` bash
 npm i newman-reporter-htmlextra
 ```
+``` bash
+node ./report.js
+```
+
 ## Newman Report
 (<img width="565" height="592" alt="image" src="https://github.com/user-attachments/assets/b46e40e1-1d4b-4d66-9dd3-52475ee0b197" />
 )
